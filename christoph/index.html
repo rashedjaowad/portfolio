@@ -1,1 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomad Summit — Where Remote Workers Meet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #2CD5C5;
+    --teal-dark: #1aada0;
+    --teal-glow: rgba(44,213,197,0.15);
+    --black: #0c0c0c;
+    --near-black: #111111;
+    --surface: #161616;
+    --surface-2: #1e1e1e;
+    --white: #f5f2ed;
+    --white-dim: rgba(245,242,237,0.65);
+    --white-faint: rgba(245,242,237,0.12);
+    --mono-font: 'DM Mono', monospace;
+    --body-font: 'Space Grotesk', sans-serif;
+    --display-font: 'Bebas Neue', sans-serif;
+    --radius: 4px;
+    --radius-lg: 12px;
+  }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--body-font);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.35;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(16px);
+    background: rgba(12,12,12,0.7);
+    border-bottom: 1px solid var(--white-faint);
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    padding: 14px 48px;
+    background: rgba(12,12,12,0.95);
+  }
+  .nav-logo {
+    font-family: var(--display-font);
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--teal);
+    padding: 10px 22px;
+    border: none;
+    border-radius: var(--radius);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%) skewX(-15deg);
+    transition: transform 0.4s ease;
+  }
+  .nav-cta:hover { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(44,213,197,0.3); }
+  .nav-cta:hover::after { transform: translateX(120%) skewX(-15deg); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated grid background */
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--white-faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--white-faint) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 30%, transparent 100%);
+    animation: gridDrift 20s ease-in-out infinite alternate;
+  }
+  @keyframes gridDrift {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 30px 30px, 30px 30px; }
+  }
+
+  /* Teal accent orb */
+  #hero::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(44,213,197,0.12) 0%, transparent 65%);
+    pointer-events: none;
+    animation: orbPulse 6s ease-in-out infinite alternate;
+  }
+  @keyframes orbPulse {
+    from { opacity: 0.7; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.1); }
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--teal);
+  }
+
+  .hero-headline {
+    font-family: var(--display-font);
+    font-size: clamp(72px, 11vw, 160px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.35s forwards;
+  }
+  .hero-headline .accent { color: var(--teal); }
+  .hero-headline .outline {
+    -webkit-text-stroke: 1px var(--teal);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--white-dim);
+    max-width: 560px;
+    margin-top: 28px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.5s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.65s forwards;
+  }
+
+  /* PRIMARY CTA */
+  .cta-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--body-font);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--black);
+    background: var(--teal);
+    padding: 16px 36px;
+    border-radius: 2px;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: ctaPulse 3s ease-in-out 2s infinite;
+  }
+  @keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(44,213,197,0.5); }
+    50% { box-shadow: 0 0 0 10px rgba(44,213,197,0); }
+  }
+  .cta-primary .cta-icon {
+    width: 18px; height: 18px;
+    transition: transform 0.3s ease;
+  }
+  .cta-primary:hover {
+    background: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(44,213,197,0.4);
+  }
+  .cta-primary:hover .cta-icon { transform: translateX(4px); }
+
+  /* Ripple on click */
+  .cta-primary .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transform: scale(0);
+    animation: rippleAnim 0.6s linear;
+    pointer-events: none;
+  }
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  .cta-secondary {
+    font-family: var(--mono-font);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--white-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--white-faint);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+  .cta-secondary:hover { color: var(--white); border-color: var(--white); }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--white-faint);
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.85s forwards;
+  }
+  .hero-stat-num {
+    font-family: var(--display-font);
+    font-size: 42px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .hero-stat-num span { color: var(--teal); }
+  .hero-stat-label {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-top: 4px;
+  }
+
+  /* scroll cue */
+  .scroll-cue {
+    position: absolute;
+    bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.5s forwards;
+  }
+  .scroll-cue-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+  .scroll-cue-text {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    writing-mode: vertical-rl;
+  }
+
+  /* ─── GENERAL ANIMATION ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 100px 48px;
+    position: relative;
+  }
+  .section-label {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--display-font);
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+  .section-title .dim { color: rgba(245,242,237,0.3); }
+
+  /* ─── TICKER ─── */
+  #ticker {
+    padding: 18px 0;
+    background: var(--teal);
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: none;
+    border-bottom: none;
+  }
+  .ticker-track {
+    display: inline-flex;
+    animation: tickerMove 30s linear infinite;
+  }
+  .ticker-item {
+    font-family: var(--display-font);
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    color: var(--black);
+    padding: 0 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .ticker-dot {
+    width: 5px; height: 5px;
+    background: var(--black);
+    border-radius: 50%;
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+  @keyframes tickerMove {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    height: 480px;
+  }
+  .about-card {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--white-faint);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    backdrop-filter: blur(8px);
+  }
+  .about-card-main {
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .about-card-main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(44,213,197,0.08)' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='rgba(44,213,197,0.06)' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='10' fill='none' stroke='rgba(44,213,197,0.05)' stroke-width='1'/%3E%3C/svg%3E") center/180px 180px repeat;
+    opacity: 0.5;
+  }
+  .about-card-year {
+    font-family: var(--display-font);
+    font-size: 96px;
+    color: rgba(44,213,197,0.08);
+    line-height: 1;
+    position: absolute;
+    top: 20px; right: 20px;
+  }
+  .about-card-content {
+    position: relative;
+    z-index: 2;
+  }
+  .about-card-content h3 {
+    font-family: var(--display-font);
+    font-size: 28px;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .about-card-content p {
+    font-size: 14px;
+    color: var(--white-dim);
+    font-family: var(--mono-font);
+  }
+
+  .about-float-card {
+    position: absolute;
+    background: var(--surface-2);
+    border: 1px solid rgba(44,213,197,0.2);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: var(--white);
+  }
+  .about-float-1 {
+    top: -20px; right: -20px;
+    animation: float1 4s ease-in-out infinite alternate;
+  }
+  .about-float-2 {
+    bottom: 40px; right: -30px;
+    animation: float2 5s ease-in-out infinite alternate;
+  }
+  @keyframes float1 {
+    from { transform: translateY(0) rotate(-1deg); }
+    to { transform: translateY(-12px) rotate(1deg); }
+  }
+  @keyframes float2 {
+    from { transform: translateY(0) rotate(1deg); }
+    to { transform: translateY(10px) rotate(-1deg); }
+  }
+  .float-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .float-value {
+    font-size: 20px;
+    font-family: var(--display-font);
+    letter-spacing: 0.05em;
+  }
+
+  .about-text .section-label { margin-bottom: 24px; }
+  .about-text p {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .about-text p strong { color: var(--white); font-weight: 600; }
+
+  /* ─── PILLARS ─── */
+  #pillars {
+    background: var(--surface);
+  }
+  .pillars-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .pillar-card {
+    background: var(--near-black);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+    cursor: default;
+  }
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--teal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .pillar-card:hover { background: var(--surface-2); }
+  .pillar-card:hover::before { transform: scaleX(1); }
+  .pillar-num {
+    font-family: var(--display-font);
+    font-size: 80px;
+    color: rgba(245,242,237,0.05);
+    line-height: 1;
+    position: absolute;
+    top: 16px; right: 20px;
+    transition: color 0.3s;
+  }
+  .pillar-card:hover .pillar-num { color: rgba(44,213,197,0.08); }
+  .pillar-icon {
+    width: 44px; height: 44px;
+    background: var(--teal-glow);
+    border: 1px solid rgba(44,213,197,0.3);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+    font-size: 20px;
+  }
+  .pillar-title {
+    font-family: var(--display-font);
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .pillar-desc {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.7;
+  }
+
+  /* ─── EVENTS / DATES ─── */
+  #events {
+    overflow: hidden;
+  }
+  .events-header { margin-bottom: 64px; }
+  .event-row {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    align-items: center;
+    gap: 40px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--white-faint);
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+  .event-row:first-of-type { border-top: 1px solid var(--white-faint); }
+  .event-row:hover { padding-left: 16px; border-color: rgba(44,213,197,0.3); }
+  .event-date {
+    font-family: var(--mono-font);
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+  }
+  .event-name {
+    font-family: var(--display-font);
+    font-size: 36px;
+    letter-spacing: 0.03em;
+    color: var(--white);
+  }
+  .event-location {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: var(--white-dim);
+    margin-top: 4px;
+    letter-spacing: 0.08em;
+  }
+  .event-badge {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+  .event-badge.live {
+    background: rgba(44,213,197,0.12);
+    color: var(--teal);
+    border: 1px solid rgba(44,213,197,0.3);
+  }
+  .event-badge.soon {
+    background: var(--white-faint);
+    color: var(--white-dim);
+    border: 1px solid var(--white-faint);
+  }
+
+  /* ─── SPEAKERS ─── */
+  #speakers { background: var(--near-black); }
+  .speakers-header { margin-bottom: 56px; }
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .speaker-card {
+    background: var(--surface);
+    border: 1px solid var(--white-faint);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .speaker-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--teal-glow) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .speaker-card:hover { border-color: rgba(44,213,197,0.3); transform: translateY(-4px); }
+  .speaker-card:hover::after { opacity: 1; }
+  .speaker-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display-font);
+    font-size: 20px;
+    color: var(--black);
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+  }
+  .speaker-name {
+    font-family: var(--body-font);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .speaker-title {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .speaker-topic {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+
+  /* ─── PROGRAM TIMELINE ─── */
+  #program { background: var(--surface); }
+  .program-header { margin-bottom: 56px; }
+  .program-days {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 40px;
+  }
+  .day-tab {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    border: 1px solid var(--white-faint);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--white-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .day-tab.active {
+    background: var(--teal);
+    color: var(--black);
+    border-color: var(--teal);
+    font-weight: 600;
+  }
+  .day-tab:hover:not(.active) {
+    background: var(--white-faint);
+    color: var(--white);
+  }
+  .program-block { display: none; }
+  .program-block.active { display: block; }
+  .agenda-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--white-faint);
+    align-items: start;
+    transition: background 0.2s;
+  }
+  .agenda-item:hover { background: var(--white-faint); border-radius: var(--radius); padding-left: 12px; }
+  .agenda-time {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    padding-top: 2px;
+  }
+  .agenda-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .agenda-speaker {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+  }
+  .agenda-tag {
+    display: inline-block;
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 6px;
+  }
+  .tag-keynote { background: rgba(44,213,197,0.1); color: var(--teal); border: 1px solid rgba(44,213,197,0.2); }
+  .tag-panel { background: rgba(245,242,237,0.06); color: var(--white-dim); border: 1px solid var(--white-faint); }
+  .tag-social { background: rgba(44,213,197,0.06); color: var(--teal-dark); border: 1px solid rgba(44,213,197,0.15); }
+
+  /* ─── COMMUNITY PARTNERS ─── */
+  #partners { background: var(--teal); padding: 80px 48px; overflow: hidden; }
+  .partners-title {
+    font-family: var(--display-font);
+    font-size: clamp(40px, 5vw, 60px);
+    color: var(--black);
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .partners-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .partner-pill {
+    font-family: var(--body-font);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--black);
+    background: rgba(0,0,0,0.1);
+    padding: 10px 24px;
+    border-radius: 40px;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  .partner-pill:hover {
+    background: var(--black);
+    color: var(--teal);
+    border-color: var(--black);
+    transform: translateY(-2px);
+  }
+
+  /* ─── NOMAD WEEK ─── */
+  #nomadweek { background: var(--near-black); }
+  .nw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .nw-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 40px;
+  }
+  .nw-stat {
+    background: var(--surface);
+    padding: 28px;
+  }
+  .nw-stat-num {
+    font-family: var(--display-font);
+    font-size: 52px;
+    color: var(--teal);
+    line-height: 1;
+  }
+  .nw-stat-label {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-top: 6px;
+  }
+  .nw-features { list-style: none; margin-top: 28px; }
+  .nw-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--white-faint);
+    font-size: 15px;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+  .nw-features li::before {
+    content: '→';
+    color: var(--teal);
+    font-family: var(--mono-font);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ─── NEWS / BLOG ─── */
+  #news { background: var(--black); }
+  .news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+  }
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .news-card {
+    background: var(--surface);
+    border: 1px solid var(--white-faint);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+  }
+  .news-card:hover { border-color: rgba(44,213,197,0.3); transform: translateY(-4px); }
+  .news-card-img {
+    height: 160px;
+    background: var(--surface-2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .news-card-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(44,213,197,0.1) 0%, transparent 60%);
+  }
+  .news-card-img-icon {
+    font-family: var(--display-font);
+    font-size: 48px;
+    color: rgba(44,213,197,0.15);
+    letter-spacing: 0.05em;
+  }
+  .news-card-body { padding: 24px; }
+  .news-card-tag {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .news-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .news-card-excerpt {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+
+  /* ─── BIG CTA SECTION ─── */
+  #cta-band {
+    background: var(--surface);
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta-band::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(44,213,197,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    animation: orbPulse 5s ease-in-out infinite alternate;
+  }
+  .cta-band-label {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 24px;
+    display: block;
+  }
+  .cta-band-title {
+    font-family: var(--display-font);
+    font-size: clamp(56px, 8vw, 112px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+  .cta-band-title .outline {
+    -webkit-text-stroke: 1.5px var(--teal);
+    color: transparent;
+  }
+  .cta-band-sub {
+    font-size: 17px;
+    color: var(--white-dim);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+  .cta-band-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* CTA SHIMMER button variant */
+  .cta-shimmer {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--body-font);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    background: var(--teal);
+    padding: 20px 52px;
+    border-radius: 2px;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: ctaPulse 3s ease-in-out 1s infinite;
+  }
+  .cta-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg);
+    animation: shimmer 3s ease-in-out 2s infinite;
+  }
+  @keyframes shimmer {
+    0% { left: -75%; }
+    100% { left: 150%; }
+  }
+  .cta-shimmer:hover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 0 16px 48px rgba(44,213,197,0.45);
+  }
+  .cta-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--body-font);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--white);
+    background: transparent;
+    padding: 20px 36px;
+    border-radius: 2px;
+    border: 1px solid var(--white-faint);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .cta-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ─── NEWSLETTER ─── */
+  #newsletter {
+    background: var(--black);
+    padding: 80px 48px;
+    border-top: 1px solid var(--white-faint);
+  }
+  .newsletter-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .newsletter-title {
+    font-family: var(--display-font);
+    font-size: clamp(36px, 4vw, 54px);
+    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .newsletter-sub {
+    font-size: 15px;
+    color: var(--white-dim);
+    line-height: 1.7;
+  }
+  .newsletter-form {
+    display: flex;
+    gap: 8px;
+  }
+  .newsletter-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--white-faint);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-family: var(--body-font);
+    font-size: 14px;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .newsletter-input::placeholder { color: var(--white-dim); }
+  .newsletter-input:focus { border-color: var(--teal); }
+  .newsletter-btn {
+    background: var(--teal);
+    color: var(--black);
+    font-family: var(--body-font);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .newsletter-btn:hover { background: var(--white); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--near-black);
+    border-top: 1px solid var(--white-faint);
+    padding: 64px 48px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand-name {
+    font-family: var(--display-font);
+    font-size: 28px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .footer-brand-name span { color: var(--teal); }
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 12px;
+  }
+  .footer-social {
+    width: 36px; height: 36px;
+    background: var(--white-faint);
+    border: 1px solid var(--white-faint);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono-font);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--white-dim);
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0;
+  }
+  .footer-social:hover { background: var(--teal); color: var(--black); border-color: var(--teal); }
+  .footer-col-title {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a {
+    font-size: 14px;
+    color: var(--white-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--white-faint);
+  }
+  .footer-copy {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    section { padding: 64px 24px; }
+    #hero { padding: 100px 24px 64px; }
+    #about, .nw-grid, .newsletter-inner { grid-template-columns: 1fr; gap: 48px; }
+    .about-visual { height: 300px; }
+    .pillars-grid { grid-template-columns: 1fr; }
+    .speakers-grid { grid-template-columns: repeat(2, 1fr); }
+    .news-grid { grid-template-columns: 1fr; }
+    .event-row { grid-template-columns: 1fr; gap: 8px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; }
+    #partners { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="main-nav">
+  <a href="https://www.nomadsummit.com" class="nav-logo">NOMAD<span>SUMMIT</span></a>
+  <ul class="nav-links">
+    <li><a href="https://www.nomadsummit.com/upcoming-events/">Events</a></li>
+    <li><a href="https://www.nomadsummit.com/program-agenda-26/">Program</a></li>
+    <li><a href="https://www.nomadsummit.com/chiang-mai-2026/nomad-week/">Nomad Week</a></li>
+    <li><a href="https://www.nomadsummit.com/nomad-summit-chiang-mai-2026-recap/">Recap</a></li>
+    <li><a href="https://www.nomadsummit.com/#news">News</a></li>
+  </ul>
+  <a href="https://www.nomadsummit.com/upcoming-events/" class="nav-cta">Get Tickets →</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <p class="hero-eyebrow">Est. 2015 · Chiang Mai, Thailand</p>
+  <h1 class="hero-headline">
+    BUILD<br>
+    YOUR<br>
+    <span class="accent">FREE</span><span class="outline">DOM</span>
+  </h1>
+  <p class="hero-sub">The world's longest-standing conference for digital nomads, remote builders, and location-independent entrepreneurs. Since 2015, we have gathered in Chiang Mai to share, build, and grow together.</p>
+  <div class="hero-actions">
+    <a href="https://www.nomadsummit.com/upcoming-events/" class="cta-primary" id="hero-cta">
+      <span>Secure Your Spot</span>
+      <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="https://www.nomadsummit.com/program-agenda-26/" class="cta-secondary">View Full Program</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">400<span>+</span></div>
+      <div class="hero-stat-label">Attendees</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">50<span>+</span></div>
+      <div class="hero-stat-label">Nomad Week Events</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">10<span>+</span></div>
+      <div class="hero-stat-label">Years Running</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">Countries</div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-cue-line"></div>
+    <span class="scroll-cue-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ─── TICKER ─── -->
+<div id="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker-track">
+    <!-- JS will duplicate this -->
+    <span class="ticker-item">Chiang Mai 2027 — Coming Soon<span class="ticker-dot"></span></span>
+    <span class="ticker-item">250+ Founders Freelancers Operators<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Building Freedom Since 2015<span class="ticker-dot"></span></span>
+    <span class="ticker-item">AI Matchmaking · Buildathon · Pool Party<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Estonia · Switzerland · Thailand<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Nomad Week · 50+ Side Events<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Chiang Mai 2027 — Coming Soon<span class="ticker-dot"></span></span>
+    <span class="ticker-item">250+ Founders Freelancers Operators<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Building Freedom Since 2015<span class="ticker-dot"></span></span>
+    <span class="ticker-item">AI Matchmaking · Buildathon · Pool Party<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Estonia · Switzerland · Thailand<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Nomad Week · 50+ Side Events<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card about-card-main">
+      <div class="about-card-year">2027</div>
+      <div class="about-card-content">
+        <h3>Shangri-La Chiang Mai</h3>
+        <p>The global capital of remote work</p>
+      </div>
+    </div>
+    <div class="about-float-card about-float-1">
+      <div class="float-label">Next Event</div>
+      <div class="float-value">July 2026</div>
+    </div>
+    <div class="about-float-card about-float-2">
+      <div class="float-label">Community</div>
+      <div class="float-value">400+ Nomads</div>
+    </div>
+  </div>
+  <div class="about-text reveal reveal-delay-2">
+    <p class="section-label">About the Summit</p>
+    <h2 class="section-title">One week.<br><span class="dim">Many worlds.</span></h2>
+    <p>Originally founded in 2015 in Chiang Mai — the world capital of remote work and digital nomadism — Nomad Summit has inspired <strong>countless digital nomads worldwide</strong>.</p>
+    <p>We bring together the best of all worlds: a dynamic conference packed with inspiring talks, a hands-on Buildathon where ideas meet action, and Nomad Week — a full week of <strong>40+ community-led side events</strong>.</p>
+    <p>For those driven to build — whether it is a business, a skillset, a community, or a life of freedom.</p>
+    <a href="https://www.nomadsummit.com/nomad-summit-chiang-mai-2026-recap/" class="cta-secondary" style="margin-top:8px; display:inline-block;">Read 2026 Recap →</a>
+  </div>
+</section>
+
+<!-- ─── PILLARS ─── -->
+<section id="pillars">
+  <div class="pillars-header reveal">
+    <div>
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Three pillars.<br><span class="dim">One week.</span></h2>
+    </div>
+  </div>
+  <div class="pillars-grid">
+    <div class="pillar-card reveal">
+      <div class="pillar-num">01</div>
+      <div class="pillar-icon">🎤</div>
+      <h3 class="pillar-title">Conference</h3>
+      <p class="pillar-desc">Two packed days of high-energy keynotes, panels, and workshops led by successful founders, operators, and investors at the 5-star Shangri-La Hotel in Chiang Mai.</p>
+    </div>
+    <div class="pillar-card reveal reveal-delay-1">
+      <div class="pillar-num">02</div>
+      <div class="pillar-icon">⚡</div>
+      <h3 class="pillar-title">Buildathon</h3>
+      <p class="pillar-desc">A hands-on hackathon for builders. Mixed teams form, combine skills, and create something remarkable in a fast-paced, inspiring environment — then pitch to a jury.</p>
+    </div>
+    <div class="pillar-card reveal reveal-delay-2">
+      <div class="pillar-num">03</div>
+      <div class="pillar-icon">🌏</div>
+      <h3 class="pillar-title">Nomad Week</h3>
+      <p class="pillar-desc">A full week of 50+ community-hosted events across 20+ venues: workshops, coworking days, hikes, dinners, and more. You bring the idea — we help you make it happen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── UPCOMING EVENTS ─── -->
+<section id="events">
+  <div class="events-header reveal">
+    <p class="section-label">Events</p>
+    <h2 class="section-title">Upcoming<br><span class="dim">gatherings.</span></h2>
+  </div>
+  <div class="event-row reveal">
+    <div class="event-date">July 3–5, 2026</div>
+    <div>
+      <div class="event-name">Nomad Summit</div>
+      <div class="event-location">📍 Europe (details TBA)</div>
+    </div>
+    <a href="https://www.nomadsummit.com/upcoming-events/" class="event-badge live">Register Now</a>
+  </div>
+  <div class="event-row reveal reveal-delay-1">
+    <div class="event-date">Jan 2027</div>
+    <div>
+      <div class="event-name">Chiang Mai '27</div>
+      <div class="event-location">📍 Shangri-La, Chiang Mai, Thailand</div>
+    </div>
+    <span class="event-badge soon">Notify Me</span>
+  </div>
+</section>
+
+<!-- ─── SPEAKERS ─── -->
+<section id="speakers">
+  <div class="speakers-header reveal">
+    <p class="section-label">Past Speakers 2026</p>
+    <h2 class="section-title">Voices that<br><span class="dim">shape the road.</span></h2>
+  </div>
+  <div class="speakers-grid">
+    <div class="speaker-card reveal">
+      <div class="speaker-avatar">FB</div>
+      <div class="speaker-name">Fabio Faccin</div>
+      <div class="speaker-title">Co-founder · Life Out of the Box</div>
+      <p class="speaker-topic">From Zero to Financial Freedom: business, real estate, and stock market investing</p>
+    </div>
+    <div class="speaker-card reveal reveal-delay-1">
+      <div class="speaker-avatar">QB</div>
+      <div class="speaker-name">Dr. Quinn Button</div>
+      <div class="speaker-title">Consumer Behavior Researcher (PhD)</div>
+      <p class="speaker-topic">Before It's a Trend: How to Spot Opportunities Early and Build What's Next</p>
+    </div>
+    <div class="speaker-card reveal reveal-delay-2">
+      <div class="speaker-avatar">KS</div>
+      <div class="speaker-name">Konstantin Sadekov</div>
+      <div class="speaker-title">Growth Strategist</div>
+      <p class="speaker-topic">10x Your Online Visibility in AI Search: The LLM Optimization Playbook</p>
+    </div>
+    <div class="speaker-card reveal reveal-delay-3">
+      <div class="speaker-avatar">KA</div>
+      <div class="speaker-name">Kaisu Annala</div>
+      <div class="speaker-title">Policy Advocate · Social Sciences (PhD)</div>
+      <p class="speaker-topic">Digital Nomad Visas and the New Mobility Contract between nomads and states</p>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:48px;" class="reveal">
+    <a href="https://www.nomadsummit.com/program-agenda-26/" class="cta-outline">View Full Speaker Lineup →</a>
+  </div>
+</section>
+
+<!-- ─── PROGRAM ─── -->
+<section id="program">
+  <div class="program-header reveal">
+    <p class="section-label">Agenda 2026</p>
+    <h2 class="section-title">Two days,<br><span class="dim">real substance.</span></h2>
+  </div>
+  <div class="program-days reveal">
+    <button class="day-tab active" onclick="switchDay('day1', this)">Day 1 · Jan 17</button>
+    <button class="day-tab" onclick="switchDay('day2', this)">Day 2 · Jan 18</button>
+  </div>
+  <div class="program-block active" id="day1">
+    <div class="agenda-item">
+      <div class="agenda-time">09:00 – 09:30</div>
+      <div>
+        <div class="agenda-title">Welcome & Opening Keynote</div>
+        <div class="agenda-speaker">Christoph Huebner & Alexandra Mosnitska</div>
+        <span class="agenda-tag tag-keynote">Keynote</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">10:00 – 10:30</div>
+      <div>
+        <div class="agenda-title">Digital Nomad Visas and the New Mobility Contract</div>
+        <div class="agenda-speaker">Kaisu Annala</div>
+        <span class="agenda-tag tag-keynote">Keynote</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">11:00 – 12:00</div>
+      <div>
+        <div class="agenda-title">Buildathon: Team Formation & Pitching</div>
+        <div class="agenda-speaker">Open to all attendees</div>
+        <span class="agenda-tag tag-panel">Workshop</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">13:00 – 14:00</div>
+      <div>
+        <div class="agenda-title">Gourmet Lunch + AI-Powered Matchmaking</div>
+        <div class="agenda-speaker">Meet your people</div>
+        <span class="agenda-tag tag-social">Networking</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">18:00 – 23:00</div>
+      <div>
+        <div class="agenda-title">Dinner & Afterparty at Ta Tamnak Privilege</div>
+        <div class="agenda-speaker">Free shuttle from Shangri-La</div>
+        <span class="agenda-tag tag-social">Social</span>
+      </div>
+    </div>
+  </div>
+  <div class="program-block" id="day2">
+    <div class="agenda-item">
+      <div class="agenda-time">11:00 – 11:25</div>
+      <div>
+        <div class="agenda-title">From Zero to Financial Freedom</div>
+        <div class="agenda-speaker">Fabio Faccin</div>
+        <span class="agenda-tag tag-keynote">Keynote</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">11:30 – 12:05</div>
+      <div>
+        <div class="agenda-title">The Money Panel: Your Globalized Strategy to Retire Early</div>
+        <div class="agenda-speaker">Aleksa Burmazović, Fabio Faccin, Christoph Huebner</div>
+        <span class="agenda-tag tag-panel">Panel</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">13:45 – 14:10</div>
+      <div>
+        <div class="agenda-title">Before It's a Trend: Spot Opportunities Early</div>
+        <div class="agenda-speaker">Dr. Quinn Button</div>
+        <span class="agenda-tag tag-keynote">Keynote</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">14:10 – 14:35</div>
+      <div>
+        <div class="agenda-title">10x Your Online Visibility in AI Search</div>
+        <div class="agenda-speaker">Konstantin Sadekov</div>
+        <span class="agenda-tag tag-keynote">Keynote</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">15:15 – 15:40</div>
+      <div>
+        <div class="agenda-title">Inside the Exit: Building, Scaling, Selling Digital Businesses</div>
+        <div class="agenda-speaker">Fiona Laidlaw & Sheena Low</div>
+        <span class="agenda-tag tag-panel">Talk</span>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">16:00 – 20:30</div>
+      <div>
+        <div class="agenda-title">Legendary Pool Party at Shangri-La</div>
+        <div class="agenda-speaker">Open to all attendees</div>
+        <span class="agenda-tag tag-social">Social</span>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:40px;" class="reveal">
+    <a href="https://www.nomadsummit.com/program-agenda-26/" class="cta-outline">Full Agenda →</a>
+  </div>
+</section>
+
+<!-- ─── COMMUNITY PARTNERS ─── -->
+<section id="partners">
+  <h2 class="partners-title">Community Partners</h2>
+  <div class="partners-row reveal">
+    <a href="https://go.nomadsummit.com/nomad-magazine-cm2026" target="_blank" rel="noopener" class="partner-pill">Nomad Magazine</a>
+    <a href="https://go.nomadsummit.com/remote-tribe-cm2026" target="_blank" rel="noopener" class="partner-pill">Remote Tribe</a>
+    <a href="https://go.nomadsummit.com/curves-cm2026" target="_blank" rel="noopener" class="partner-pill">Curves</a>
+    <a href="https://go.nomadsummit.com/shakesphere-cm2026" target="_blank" rel="noopener" class="partner-pill">Shakesphere</a>
+    <a href="https://go.nomadsummit.com/4seas-cm2026" target="_blank" rel="noopener" class="partner-pill">4Seas</a>
+  </div>
+</section>
+
+<!-- ─── NOMAD WEEK ─── -->
+<section id="nomadweek">
+  <div class="nw-grid">
+    <div class="reveal">
+      <p class="section-label">Nomad Week</p>
+      <h2 class="section-title">Community<br>takes<br><span class="dim">over.</span></h2>
+      <p style="color:var(--white-dim); margin-top:24px; line-height:1.8; max-width:440px;">After the main conference, Nomad Week is where the community runs the show. A full week of side events hosted by attendees — workshops, coworking days, hikes, dinners, and more. You bring the idea, we help you make it happen.</p>
+      <ul class="nw-features">
+        <li>Free for conference ticket holders</li>
+        <li>Open to the general public on a pay-per-event basis</li>
+        <li>Premium ticket holders get priority booking access</li>
+        <li>Hosted across 20+ venues all over Chiang Mai</li>
+      </ul>
+      <a href="https://www.nomadsummit.com/chiang-mai-2026/nomad-week/" class="cta-secondary" style="display:inline-block; margin-top:28px;">Explore Nomad Week →</a>
+    </div>
+    <div class="nw-stat-grid reveal reveal-delay-2">
+      <div class="nw-stat">
+        <div class="nw-stat-num">50+</div>
+        <div class="nw-stat-label">Side Events</div>
+      </div>
+      <div class="nw-stat">
+        <div class="nw-stat-num">20+</div>
+        <div class="nw-stat-label">Venues</div>
+      </div>
+      <div class="nw-stat">
+        <div class="nw-stat-num">7</div>
+        <div class="nw-stat-label">Full Days</div>
+      </div>
+      <div class="nw-stat">
+        <div class="nw-stat-num">∞</div>
+        <div class="nw-stat-label">Connections</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEWS / BLOG ─── -->
+<section id="news">
+  <div class="news-header reveal">
+    <div>
+      <p class="section-label">Latest</p>
+      <h2 class="section-title">News &amp; Stories</h2>
+    </div>
+    <a href="https://www.nomadsummit.com/#news" class="cta-outline" style="padding:12px 24px; font-size:13px;">See All News →</a>
+  </div>
+  <div class="news-grid">
+    <a href="https://www.nomadsummit.com/nomad-summit-chiang-mai-2026-recap/" class="news-card reveal">
+      <div class="news-card-img"><span class="news-card-img-icon">RECAP</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">Recap · 2026</div>
+        <div class="news-card-title">Nomad Summit Chiang Mai 2026: Full Recap</div>
+        <div class="news-card-excerpt">12 talks, 2 panels, the Buildathon, 50+ Nomad Week events. Here is everything that happened across the most ambitious Summit yet.</div>
+      </div>
+    </a>
+    <a href="https://www.nomadsummit.com/episode-36-nomad-summit-chiang-mai-first-recap/" class="news-card reveal reveal-delay-1">
+      <div class="news-card-img"><span class="news-card-img-icon">POD</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">Podcast · Ep. 36</div>
+        <div class="news-card-title">Episode 36: First Reactions from the Pool Party</div>
+        <div class="news-card-excerpt">Recorded live during Nomad Week — attendee reflections, candid conversations, and the feeling when an intense few days finally land.</div>
+      </div>
+    </a>
+    <a href="https://www.nomadsummit.com/upcoming-events/" class="news-card reveal reveal-delay-2">
+      <div class="news-card-img"><span class="news-card-img-icon">2027</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">Announcement</div>
+        <div class="news-card-title">Planning for 2027 is Already Underway</div>
+        <div class="news-card-excerpt">Subscribe to the newsletter and be the first to grab your ticket the moment they go live for Chiang Mai 2027.</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ─── BIG CTA ─── -->
+<section id="cta-band">
+  <span class="cta-band-label reveal">Next Stop: July 2026</span>
+  <h2 class="cta-band-title reveal">
+    YOUR<br>NEXT<br><span class="outline">CHAPTER</span>
+  </h2>
+  <p class="cta-band-sub reveal">Join 400+ nomads, founders, freelancers, and operators. Connect, learn, build. Tickets sell out fast.</p>
+  <div class="cta-band-actions reveal">
+    <a href="https://www.nomadsummit.com/upcoming-events/" class="cta-shimmer" id="main-cta">
+      Get Your Ticket
+      <svg style="width:18px;height:18px;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="https://www.nomadsummit.com/" class="cta-outline">Explore All Events</a>
+  </div>
+</section>
+
+<!-- ─── NEWSLETTER ─── -->
+<section id="newsletter">
+  <div class="newsletter-inner">
+    <div class="reveal">
+      <h2 class="newsletter-title">Stay in<br>the loop.</h2>
+      <p class="newsletter-sub">Get Summit updates, speaker announcements, and nomad insights — straight to your inbox.</p>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+        <input type="email" class="newsletter-input" placeholder="your@email.com" required id="nl-email">
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p style="font-family:var(--mono-font); font-size:11px; color:var(--white-dim); margin-top:12px; letter-spacing:0.08em;">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">NOMAD<span>SUMMIT</span></div>
+      <p class="footer-tagline">The world's longest-standing conference for digital nomads, remote builders, and location-independent entrepreneurs. Building freedom since 2015.</p>
+      <div class="footer-socials">
+        <a href="https://www.nomadsummit.com/" class="footer-social" title="Website">W</a>
+        <a href="https://www.nomadsummit.com/#podcast" class="footer-social" title="Podcast">🎙</a>
+        <a href="https://www.nomadsummit.com/upcoming-events/" class="footer-social" title="Events">📅</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Events</div>
+      <ul class="footer-links">
+        <li><a href="https://www.nomadsummit.com/upcoming-events/">Upcoming Events</a></li>
+        <li><a href="https://www.nomadsummit.com/chiang-mai-2026/">Chiang Mai 2026</a></li>
+        <li><a href="https://www.nomadsummit.com/chiang-mai-2026/nomad-week/">Nomad Week</a></li>
+        <li><a href="https://www.nomadsummit.com/program-agenda-26/">Full Agenda</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Community</div>
+      <ul class="footer-links">
+        <li><a href="https://www.nomadsummit.com/nomad-summit-scholarship-chiang-mai-2026/">Scholarship</a></li>
+        <li><a href="https://www.nomadsummit.com/#partners">Community Partners</a></li>
+        <li><a href="https://www.nomadsummit.com/nomad-summit-chiang-mai-2026-recap/">2026 Recap</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Resources</div>
+      <ul class="footer-links">
+        <li><a href="https://www.nomadsummit.com/#podcast">Podcast</a></li>
+        <li><a href="https://www.nomadsummit.com/#news">News</a></li>
+        <li><a href="https://www.nomadsummit.com/#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Nomad Summit. All rights reserved.</span>
+    <span class="footer-copy">Made for the freedom-builders of the world.</span>
+  </div>
+</footer>
+
+<script>
+  /* NAV scroll */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* Reveal on scroll */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* Ripple on CTA */
+  document.querySelectorAll('.cta-primary, .cta-shimmer').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const r = document.createElement('span');
+      r.className = 'ripple';
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height) * 2;
+      r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+      this.appendChild(r);
+      setTimeout(() => r.remove(), 700);
+    });
+  });
+
+  /* Program day tabs */
+  function switchDay(dayId, btn) {
+    document.querySelectorAll('.program-block').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(dayId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* Newsletter */
+  function handleNewsletterSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const input = document.getElementById('nl-email');
+    btn.textContent = '✓ Subscribed!';
+    btn.style.background = '#0c0c0c';
+    btn.style.color = 'var(--teal)';
+    input.value = '';
+    input.disabled = true;
+    setTimeout(() => {
+      window.location.href = 'https://www.nomadsummit.com/#newsletter';
+    }, 1500);
+  }
+
+  /* Parallax hero subtle */
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const hero = document.getElementById('hero');
+    if (y < window.innerHeight) {
+      hero.style.backgroundPositionY = (y * 0.3) + 'px';
+    }
+  });
+
+  /* Ticker — duplicate for seamless loop */
+  const track = document.getElementById('ticker-track');
+  const clone = track.cloneNode(true);
+  track.parentNode.appendChild(clone);
+</script>
+</body>
+</html>
