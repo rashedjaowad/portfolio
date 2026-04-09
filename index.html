@@ -302,7 +302,7 @@
   /* WHAT I DO */
   #what .do-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     border: 1px solid var(--border);
   }
@@ -715,7 +715,7 @@
     #global { padding: 56px 20px !important; }
 
     /* What I Do grid */
-    #what .do-grid { grid-template-columns: 1fr; }
+    #what .do-grid { grid-template-columns: 1fr 1fr; }
     .do-card { padding: 28px 24px; }
 
     /* Skills */
@@ -770,6 +770,7 @@
     .hero-h1 { font-size: clamp(32px, 10vw, 48px); }
     .hero-tag { font-size: 10px; letter-spacing: 0.12em; }
     .metric-row { grid-template-columns: 1fr; }
+    #what .do-grid { grid-template-columns: 1fr; }
     .do-card { padding: 24px 18px; }
     .philo-inner { padding: 24px 18px; }
     .project-item { padding: 16px 14px; }
