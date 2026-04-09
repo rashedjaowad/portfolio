@@ -499,6 +499,12 @@
     text-transform: uppercase;
   }
 
+
+  #philosophy, #global, #contact { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+  @media (max-width: 768px) {
+    #philosophy, #global, #contact { padding: 56px 20px !important; max-width: 100% !important; }
+  }
+
   /* PHILOSOPHY */
   #philosophy {
     padding: 100px 40px;
@@ -673,19 +679,100 @@
     to { transform: translateX(-50%); }
   }
 
+
+  /* HERO standalone padding */
+  .section-hero { padding: 120px 40px 80px; }
+  @media (max-width: 768px) {
+    .section-hero { padding: 88px 20px 64px !important; }
+  }
+  @media (max-width: 420px) {
+    .section-hero { padding: 80px 16px 56px !important; }
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
+    /* Base */
+    body { cursor: auto; }
+    #cursor, #cursor-ring { display: none; }
+
+    /* Nav */
+    nav { padding: 14px 20px; }
     .nav-links { display: none; }
-    #hero { padding: 100px 20px 80px; }
-    section { padding: 60px 20px; }
-    #philosophy { padding: 60px 20px; }
-    #contact { padding: 60px 20px; }
-    .philo-inner { padding: 40px 28px; }
-    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-    #skills .skills-wrap { grid-template-columns: 1fr; gap: 40px; }
+
+    /* Hero */
+    #hero { padding: 88px 20px 64px !important; }
+    .hero-h1 { font-size: clamp(38px, 11vw, 60px); }
+    .hero-sub { font-size: 13px; }
+    .hero-ctas { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
     .hero-stat-row { display: none; }
-    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .hero-scroll { display: none; }
+
+    /* Sections */
+    section { padding: 56px 20px !important; }
+    #philosophy { padding: 56px 20px !important; }
+    #contact { padding: 56px 20px !important; max-width: 100% !important; }
+    #global { padding: 56px 20px !important; }
+
+    /* What I Do grid */
+    #what .do-grid { grid-template-columns: 1fr; }
+    .do-card { padding: 28px 24px; }
+
+    /* Skills */
+    #skills .skills-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .metric-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .metric-num { font-size: 28px; }
+    .metric-box { padding: 18px 14px; }
+
+    /* Projects */
+    .project-item {
+      grid-template-columns: 40px 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px 12px;
+      padding: 20px 16px;
+    }
+    .project-tag {
+      grid-column: 2;
+      justify-self: start;
+      margin-top: 4px;
+    }
+    .project-name { font-size: 15px; }
+    .project-desc { font-size: 12px; }
+
+    /* Philosophy */
+    .philo-inner { padding: 32px 24px; }
+    .philo-inner::before { font-size: 180px; top: -30px; left: 10px; }
+    .philo-quote { font-size: clamp(18px, 5vw, 26px); }
+
+    /* Global map section */
+    #global > div > div:last-child { padding: 24px 16px; }
+    #global .reveal-delay-1 { padding: 24px 16px !important; }
+    #map-wrap { border-radius: 2px; }
+    /* Two-col statement under map */
+    .global-statement {
+      grid-template-columns: 1fr !important;
+      gap: 28px !important;
+    }
+
+    /* Contact */
+    .contact-inner { grid-template-columns: 1fr; gap: 36px; }
+    .contact-cta { font-size: clamp(28px, 8vw, 40px); }
+    .contact-text { font-size: 13px; }
+
+    /* Footer */
+    footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px 20px; }
+
+    /* Section headers */
+    .section-h2 { font-size: clamp(28px, 8vw, 44px); }
+  }
+
+  @media (max-width: 420px) {
+    .hero-h1 { font-size: clamp(32px, 10vw, 48px); }
+    .hero-tag { font-size: 10px; letter-spacing: 0.12em; }
+    .metric-row { grid-template-columns: 1fr; }
+    .do-card { padding: 24px 18px; }
+    .philo-inner { padding: 24px 18px; }
+    .project-item { padding: 16px 14px; }
   }
 
   @keyframes mapPulse {
@@ -727,7 +814,7 @@
 </nav>
 
 <!-- HERO -->
-<section id="hero" style="max-width: 100%; padding: 120px 40px 80px;">
+<section id="hero" class="section-hero" style="max-width: 100%;">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
   <p class="hero-tag">Executive Operations · AI Automation · Force Multiplier</p>
@@ -1051,7 +1138,7 @@
 </section>
 
 <!-- PHILOSOPHY -->
-<section id="philosophy" style="max-width: 100%; padding-left: 40px; padding-right: 40px;">
+<section id="philosophy">
   <div class="philo-inner reveal">
     <p class="section-label" style="margin-bottom: 32px;">The Mindset</p>
     <blockquote class="philo-quote">
@@ -1064,7 +1151,7 @@
 </section>
 
 <!-- GLOBAL REACH -->
-<section id="global" style="max-width: 100%; padding: 100px 40px;">
+<section id="global">
   <div style="max-width: 1200px; margin: 0 auto;">
     <div class="reveal">
       <p class="section-label">Global Reach</p>
@@ -1090,7 +1177,7 @@
       </div>
 
       <!-- Two-column statement -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid var(--border); padding-top: 36px;">
+      <div class="global-statement" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid var(--border); padding-top: 36px;">
         <div>
           <p style="font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1.25; margin-bottom: 14px;">19-hour timezone spread.<br />Zero dropped balls.</p>
           <p style="color: var(--muted); font-size: 13px; line-height: 1.8;">From a 9am standup in Sydney to an async update for New York at midnight. I have operated inside that window without missing a beat. Global collaboration is not a new challenge for me. It is simply how I work.</p>
@@ -1107,7 +1194,7 @@
 <div class="full-divider"></div>
 
 <!-- CONTACT -->
-<section id="contact" style="max-width: 100%; padding-left: 40px; padding-right: 40px;">
+<section id="contact">
   <div class="contact-inner">
     <div class="reveal">
       <p class="section-label">Contact</p>
