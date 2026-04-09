@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rashed Jaowad. Executive Operations & AI Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --accent: #c8f04a;
+    --accent2: #f0e040;
+    --text: #f0ede6;
+    --muted: #888880;
+    --border: rgba(255,255,255,0.08);
+    --card: rgba(255,255,255,0.04);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Mono', monospace;
+    --font-serif: 'Fraunces', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* CUSTOM CURSOR */
+  #cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  #cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, opacity 0.2s;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.7);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(200,240,74,0.08) 0%, transparent 70%);
+    top: 20%; left: 30%;
+    pointer-events: none;
+    animation: glowpulse 6s ease-in-out infinite;
+  }
+  @keyframes glowpulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeup 0.6s ease forwards 0.3s;
+  }
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeup 0.7s ease forwards 0.5s;
+  }
+  .hero-h1 em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .hero-sub {
+    max-width: 560px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeup 0.7s ease forwards 0.7s;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeup 0.6s ease forwards 0.9s;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center; gap: 8px;
+    background: var(--accent);
+    color: #0a0a0a;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    transition: transform 0.2s, background 0.2s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .btn-primary:hover { transform: translateY(-2px); background: var(--accent2); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 13px;
+    padding: 14px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: none;
+    transition: transform 0.2s, border-color 0.2s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.3); }
+  .hero-scroll {
+    position: absolute; bottom: 36px; left: 40px;
+    font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0;
+    animation: fadeup 0.5s ease forwards 1.2s;
+  }
+  .scroll-line {
+    width: 40px; height: 1px; background: var(--muted);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    height: 100%; width: 40px;
+    background: var(--accent);
+    left: -40px;
+    animation: scrollline 2s ease-in-out infinite 1.4s;
+  }
+  @keyframes scrollline {
+    0% { left: -40px; }
+    100% { left: 40px; }
+  }
+  .hero-stat-row {
+    position: absolute;
+    right: 40px; bottom: 36px;
+    display: flex; gap: 40px;
+    opacity: 0;
+    animation: fadeup 0.6s ease forwards 1s;
+  }
+  .hero-stat { text-align: right; }
+  .hero-stat .num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    display: block;
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeup {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION */
+  section {
+    padding: 100px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  .section-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .section-h2 em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted);
+  }
+  .section-intro {
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 60px;
+    font-size: 14px;
+  }
+
+  /* WHAT I DO */
+  #what .do-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+  }
+  .do-card {
+    background: var(--bg2);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: none;
+  }
+  .do-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(200,240,74,0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .do-card:hover { background: var(--bg3); }
+  .do-card:hover::before { opacity: 1; }
+  .do-card:hover .do-num { color: var(--accent); }
+  .do-num {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  .do-icon {
+    width: 40px; height: 40px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .do-icon svg { width: 36px; height: 36px; }
+  .do-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .do-desc {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .do-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .do-card:hover .do-bar { transform: scaleX(1); }
+
+  /* SKILLS */
+  #skills .skills-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .skill-group-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 36px;
+  }
+  .skill-tag {
+    font-size: 12px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 1px;
+    color: var(--muted);
+    cursor: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-tag::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s;
+    z-index: 0;
+  }
+  .skill-tag span { position: relative; z-index: 1; }
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: #0a0a0a;
+  }
+  .skill-tag:hover::before { transform: scaleX(1); }
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .metric-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+    border-radius: 2px;
+    transition: border-color 0.3s;
+  }
+  .metric-box:hover { border-color: rgba(200,240,74,0.3); }
+  .metric-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.04em;
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-label {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* PROJECTS */
+  #projects .project-list {
+    display: flex; flex-direction: column; gap: 1px;
+    border: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+  .project-item {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 28px 32px;
+    cursor: none;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-item::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+  }
+  .project-item:hover { background: var(--bg3); }
+  .project-item:hover::after { transform: scaleY(1); }
+  .project-num {
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .project-info { }
+  .project-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .project-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: rgba(200,240,74,0.08);
+    border: 1px solid rgba(200,240,74,0.2);
+    color: var(--accent);
+    border-radius: 1px;
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* PHILOSOPHY */
+  #philosophy {
+    padding: 100px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .philo-inner {
+    border: 1px solid var(--border);
+    padding: 80px;
+    position: relative;
+    background: var(--bg2);
+    overflow: hidden;
+  }
+  .philo-inner::before {
+    content: '"';
+    font-family: var(--font-serif);
+    font-size: 320px;
+    color: rgba(200,240,74,0.04);
+    position: absolute;
+    top: -60px; left: 20px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .philo-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 3.5vw, 40px);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--text);
+    max-width: 780px;
+    position: relative;
+    margin-bottom: 36px;
+  }
+  .philo-quote em { color: var(--accent); font-style: italic; }
+  .philo-author {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* CONTACT */
+  #contact {
+    padding: 100px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .contact-cta {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .contact-cta em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .contact-text {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 36px;
+  }
+  .contact-links {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 16px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s;
+    cursor: none;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--text); }
+  .contact-link-icon {
+    width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--muted);
+    letter-spacing: -0.02em;
+  }
+  .footer-text {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* DIVIDER */
+  .full-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* COUNT-UP */
+  .count-up { transition: all 0.3s; }
+
+  /* TICKER */
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    background: var(--bg2);
+  }
+  .ticker {
+    display: flex;
+    gap: 0;
+    animation: ticker 28s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 32px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ticker-item span.dot {
+    display: inline-block;
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    #hero { padding: 100px 20px 80px; }
+    section { padding: 60px 20px; }
+    #philosophy { padding: 60px 20px; }
+    #contact { padding: 60px 20px; }
+    .philo-inner { padding: 40px 28px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    #skills .skills-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .hero-stat-row { display: none; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @keyframes mapPulse {
+    0% { r: 6; opacity: 0.8; }
+    100% { r: 22; opacity: 0; }
+  }
+  .pulse-ring { transform-origin: center; }
+
+
+  @keyframes svgPulse {
+    0% { opacity: 0.7; transform: scale(0.5); }
+    100% { opacity: 0; transform: scale(1.8); }
+  }to   { stroke-dashoffset: 0; }
+  }
+  #map-container {
+    user-select: none;
+  }
+  #map-container:active {
+    cursor: grabbing;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">RJ</a>
+  <ul class="nav-links">
+    <li><a href="#what">What I Do</a></li>
+    <li><a href="#skills">Arsenal</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#global">Global</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="max-width: 100%; padding: 120px 40px 80px;">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <p class="hero-tag">Executive Operations · AI Automation · Force Multiplier</p>
+  <h1 class="hero-h1">
+    I build the<br />
+    systems<br />
+    <em>that do the work.</em>
+  </h1>
+  <p class="hero-sub">
+    Operations infrastructure. AI-powered workflows. The kind of execution
+    that makes founders sleep better. I'm Rashed. and I turn operational
+    chaos into compounding leverage.
+  </p>
+  <div class="hero-ctas">
+    <a href="#what" class="btn-primary">See What I Handle →</a>
+    <a href="#contact" class="btn-ghost">Let's Talk</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <span class="num" data-target="20">0</span>
+      <span class="label">hrs/week<br />bought back</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num" data-target="91" data-suffix="%">0</span>
+      <span class="label">efficiency<br />gains</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num" data-target="100" data-suffix="%">0</span>
+      <span class="label">financial<br />accuracy</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Agentic Workflows <span class="dot"></span></span>
+    <span class="ticker-item">n8n Automation <span class="dot"></span></span>
+    <span class="ticker-item">Executive Operations <span class="dot"></span></span>
+    <span class="ticker-item">AI Strategy <span class="dot"></span></span>
+    <span class="ticker-item">CRM Engineering <span class="dot"></span></span>
+    <span class="ticker-item">Voice AI Agents <span class="dot"></span></span>
+    <span class="ticker-item">Compliance Pipelines <span class="dot"></span></span>
+    <span class="ticker-item">Calendar Defense <span class="dot"></span></span>
+    <span class="ticker-item">HubSpot Mastery <span class="dot"></span></span>
+    <span class="ticker-item">Force Multiplier <span class="dot"></span></span>
+    <span class="ticker-item">Agentic Workflows <span class="dot"></span></span>
+    <span class="ticker-item">n8n Automation <span class="dot"></span></span>
+    <span class="ticker-item">Executive Operations <span class="dot"></span></span>
+    <span class="ticker-item">AI Strategy <span class="dot"></span></span>
+    <span class="ticker-item">CRM Engineering <span class="dot"></span></span>
+    <span class="ticker-item">Voice AI Agents <span class="dot"></span></span>
+    <span class="ticker-item">Compliance Pipelines <span class="dot"></span></span>
+    <span class="ticker-item">Calendar Defense <span class="dot"></span></span>
+    <span class="ticker-item">HubSpot Mastery <span class="dot"></span></span>
+    <span class="ticker-item">Force Multiplier <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- WHAT I DO -->
+<section id="what">
+  <div class="reveal">
+    <p class="section-label">What I Do</p>
+    <h2 class="section-h2">Tasks handled.<br /><em>Outcomes delivered.</em></h2>
+    <p class="section-intro">Not a job title. A set of capabilities deployed end-to-end, from strategy to execution.</p>
+  </div>
+  <div class="do-grid reveal reveal-delay-1">
+
+    <div class="do-card">
+      <div class="do-num">01 / Exec Ops</div>
+      <div class="do-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="28" height="28" rx="2" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="4" y1="11" x2="32" y2="11" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="13" y1="4" x2="13" y2="11" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="23" y1="4" x2="23" y2="11" stroke="#c8f04a" stroke-width="1.5"/>
+          <rect x="9" y="16" width="6" height="6" rx="1" fill="#c8f04a" opacity="0.5"/>
+          <rect x="21" y="16" width="6" height="6" rx="1" fill="#c8f04a" opacity="0.2"/>
+          <rect x="9" y="24" width="6" height="4" rx="1" fill="#c8f04a" opacity="0.2"/>
+        </svg>
+      </div>
+      <div class="do-title">Calendar Defense & Executive Proxy</div>
+      <div class="do-desc">
+        I protect founder time like it's the company's most valuable asset. because it is. I manage schedules, guard deep work blocks, handle global travel logistics, and serve as the proxy that clears the path so decisions happen fast.
+      </div>
+      <div class="do-bar"></div>
+    </div>
+
+    <div class="do-card">
+      <div class="do-num">02 / AI & Automation</div>
+      <div class="do-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="6" stroke="#c8f04a" stroke-width="1.5"/>
+          <circle cx="18" cy="18" r="2" fill="#c8f04a"/>
+          <line x1="18" y1="4" x2="18" y2="12" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="18" y1="24" x2="18" y2="32" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="4" y1="18" x2="12" y2="18" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="24" y1="18" x2="32" y2="18" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="8.1" y1="8.1" x2="13.8" y2="13.8" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="22.2" y1="22.2" x2="27.9" y2="27.9" stroke="#c8f04a" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="do-title">Agentic Workflow Engineering</div>
+      <div class="do-desc">
+        I build multi-state AI agents that don't just assist. they operate. Using n8n, OpenAI API, and Retell AI voice agents, I construct automation layers that handle routine work end-to-end, including inbox triage, CRM updates, and paperwork processing without a human in the loop.
+      </div>
+      <div class="do-bar"></div>
+    </div>
+
+    <div class="do-card">
+      <div class="do-num">03 / Client Ops</div>
+      <div class="do-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 28 L6 24 C6 21 9 19 12 19 L15 19" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="5" stroke="#c8f04a" stroke-width="1.5"/>
+          <path d="M20 24 L28 16" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M28 16 L28 22 M28 16 L22 16" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="24" cy="26" r="4" stroke="#c8f04a" stroke-width="1.5"/>
+          <path d="M22.5 26 L23.5 27 L25.5 25" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="do-title">Onboarding & Time-to-Value</div>
+      <div class="do-desc">
+        Clients do not wait. I build the documentation, walkthroughs, and technical SOPs that compress onboarding from weeks to days. Retention follows naturally when clients see value fast. I have the numbers to prove it.
+      </div>
+      <div class="do-bar"></div>
+    </div>
+
+    <div class="do-card">
+      <div class="do-num">04 / Compliance</div>
+      <div class="do-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="4" width="20" height="28" rx="2" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="13" y1="11" x2="23" y2="11" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="13" y1="16" x2="23" y2="16" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="13" y1="21" x2="19" y2="21" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="25" cy="27" r="5" fill="rgba(200,240,74,0.15)" stroke="#c8f04a" stroke-width="1.5"/>
+          <path d="M23 27 L24.5 28.5 L27 25.5" stroke="#c8f04a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="do-title">Fintech Compliance Pipelines</div>
+      <div class="do-desc">
+        Enterprise-grade onboarding for clients like Stripe and Mastercard does not happen through spreadsheets. I engineered automated pipelines with self-healing logic that process global payment payloads, handle rejections, and route exceptions. autonomously.
+      </div>
+      <div class="do-bar"></div>
+    </div>
+
+    <div class="do-card">
+      <div class="do-num">05 / CRM</div>
+      <div class="do-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="10" width="10" height="8" rx="1.5" stroke="#c8f04a" stroke-width="1.5"/>
+          <rect x="22" y="10" width="10" height="8" rx="1.5" stroke="#c8f04a" stroke-width="1.5"/>
+          <rect x="13" y="22" width="10" height="8" rx="1.5" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="14" y1="14" x2="22" y2="14" stroke="#c8f04a" stroke-width="1.5"/>
+          <line x1="18" y1="14" x2="18" y2="22" stroke="#c8f04a" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="do-title">CRM as Operating Hub</div>
+      <div class="do-desc">
+        HubSpot is not just a database in my hands. it becomes the nervous system of the business. I configure pipelines, automate lifecycle stages, and wire it into the tools around it so your commercial data is always live, clean, and actionable.
+      </div>
+      <div class="do-bar"></div>
+    </div>
+
+    <div class="do-card">
+      <div class="do-num">06 / Content Ops</div>
+      <div class="do-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="10" stroke="#c8f04a" stroke-width="1.5"/>
+          <polygon points="15,13 15,23 25,18" fill="rgba(200,240,74,0.3)" stroke="#c8f04a" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="do-title">Content Ops & Distribution</div>
+      <div class="do-desc">
+        Podcasts, videos, UGC funnels. I handle the operational side of content at scale. Production, multi-channel distribution, and outreach automation, all wired up so content becomes a lever for engagement, not a manual burden.
+      </div>
+      <div class="do-bar"></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- SKILLS SECTION -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">Arsenal</p>
+    <h2 class="section-h2">The toolkit.<br /><em>No guesswork.</em></h2>
+    <p class="section-intro">Every tool listed here is production-tested, not just studied.</p>
+  </div>
+  <div class="skills-wrap">
+    <div class="reveal reveal-delay-1">
+      <div class="skill-group-label">AI & Automation</div>
+      <div class="skill-tags">
+        <div class="skill-tag"><span>n8n</span></div>
+        <div class="skill-tag"><span>OpenAI API</span></div>
+        <div class="skill-tag"><span>Retell AI</span></div>
+        <div class="skill-tag"><span>Zapier</span></div>
+        <div class="skill-tag"><span>Instantly.ai</span></div>
+        <div class="skill-tag"><span>Agentic Logic</span></div>
+        <div class="skill-tag"><span>Voice Agents</span></div>
+        <div class="skill-tag"><span>Prompt Engineering</span></div>
+      </div>
+
+      <div class="skill-group-label">Operations & CRM</div>
+      <div class="skill-tags">
+        <div class="skill-tag"><span>HubSpot</span></div>
+        <div class="skill-tag"><span>Jira</span></div>
+        <div class="skill-tool"><span></span></div>
+        <div class="skill-tag"><span>Confluence</span></div>
+        <div class="skill-tag"><span>Notion</span></div>
+        <div class="skill-tag"><span>Stripe</span></div>
+        <div class="skill-tag"><span>Loom</span></div>
+        <div class="skill-tag"><span>Google Workspace</span></div>
+      </div>
+
+      <div class="skill-group-label">Technical</div>
+      <div class="skill-tags">
+        <div class="skill-tag"><span>JavaScript</span></div>
+        <div class="skill-tag"><span>HTML / CSS</span></div>
+        <div class="skill-tag"><span>WordPress</span></div>
+        <div class="skill-tag"><span>REST APIs</span></div>
+        <div class="skill-tag"><span>Webhook Routing</span></div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="skill-group-label">Results at a Glance</div>
+      <div class="metric-row">
+        <div class="metric-box">
+          <span class="metric-num count-up" data-target="20" data-suffix="+">0+</span>
+          <div class="metric-label">hrs/week bought back for founders</div>
+        </div>
+        <div class="metric-box">
+          <span class="metric-num count-up" data-target="43" data-suffix="%">0%</span>
+          <div class="metric-label">reduction in manual support volume</div>
+        </div>
+        <div class="metric-box">
+          <span class="metric-num count-up" data-target="91" data-suffix="%">0%</span>
+          <div class="metric-label">outreach efficiency increase, zero new headcount</div>
+        </div>
+        <div class="metric-box">
+          <span class="metric-num count-up" data-target="22" data-suffix="%">0%</span>
+          <div class="metric-label">lift in enterprise content engagement</div>
+        </div>
+        <div class="metric-box">
+          <span class="metric-num count-up" data-target="21" data-suffix="%">0%</span>
+          <div class="metric-label">faster Time-to-Value for new clients</div>
+        </div>
+        <div class="metric-box">
+          <span class="metric-num count-up" data-target="100" data-suffix="%">0%</span>
+          <div class="metric-label">accuracy in international billing & reconciliation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">Projects</p>
+    <h2 class="section-h2">Built, shipped,<br /><em>still running.</em></h2>
+    <p class="section-intro">A selection of systems and builds that are live in production or have delivered measurable outcomes.</p>
+  </div>
+
+  <div class="project-list reveal reveal-delay-1">
+    <div class="project-item">
+      <div class="project-num">01</div>
+      <div class="project-info">
+        <div class="project-name">The Agentic Assistant</div>
+        <div class="project-desc">Custom multi-state AI agent built on n8n + OpenAI that handles 80% of routine inbox triage, surfaces high-priority signals, and protects calendar blocks. Operates 24/7 without manual intervention.</div>
+      </div>
+      <div class="project-tag">n8n · OpenAI</div>
+    </div>
+
+    <div class="project-item">
+      <div class="project-num">02</div>
+      <div class="project-info">
+        <div class="project-name">Voice AI Concierge</div>
+        <div class="project-desc">A Retell AI-powered voice system that handles appointment booking, FAQ resolution, and live CRM metadata writes via voice. Clients interact naturally; the database updates in real time.</div>
+      </div>
+      <div class="project-tag">Retell AI · CRM</div>
+    </div>
+
+    <div class="project-item">
+      <div class="project-num">03</div>
+      <div class="project-info">
+        <div class="project-name">Self-Healing Compliance Pipeline</div>
+        <div class="project-desc">Automated onboarding layer for enterprise fintech clients. Stripe, Polymarket, Mastercard. Uses JavaScript routing logic to detect rejection patterns and autonomously re-route paperwork without human escalation.</div>
+      </div>
+      <div class="project-tag">Fintech · Automation</div>
+    </div>
+
+    <div class="project-item">
+      <div class="project-num">04</div>
+      <div class="project-info">
+        <div class="project-name">Outreach Automation System</div>
+        <div class="project-desc">n8n + Instantly.ai pipeline that scaled outreach operations for a 4,000+ professional network by 91% without adding headcount. Personalization logic, send scheduling, and CRM syncing all wired in.</div>
+      </div>
+      <div class="project-tag">n8n · Instantly.ai</div>
+    </div>
+
+    <div class="project-item">
+      <div class="project-num">05</div>
+      <div class="project-info">
+        <div class="project-name">Web Ops Debt Resolution</div>
+        <div class="project-desc">Diagnosed and resolved critical technical debt on a live production website: broken WordPress shortcodes, Google Maps privacy errors, and Enfold theme conditional load failures. shipped fixes without taking the site down.</div>
+      </div>
+      <div class="project-tag">WordPress · JS</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy" style="max-width: 100%; padding-left: 40px; padding-right: 40px;">
+  <div class="philo-inner reveal">
+    <p class="section-label" style="margin-bottom: 32px;">The Mindset</p>
+    <blockquote class="philo-quote">
+      I do not just work independently.<br />
+      I build the systems that make <em>independent work possible</em><br />
+      for the whole team.
+    </blockquote>
+    <div class="philo-author">Rashed Jaowad, Executive Operations & AI Strategist</div>
+  </div>
+</section>
+
+<!-- GLOBAL REACH -->
+<section id="global" style="max-width: 100%; padding: 100px 40px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="reveal">
+      <p class="section-label">Global Reach</p>
+      <h2 class="section-h2">Timezones are not<br /><em>a limitation.</em></h2>
+      <p class="section-intro" style="margin-bottom: 48px;">I have coordinated, shipped, and delivered alongside teams across six cities on five continents. Async-first by discipline. Deadline-driven by default.</p>
+    </div>
+    <div class="reveal reveal-delay-1" style="background: var(--bg2); border: 1px solid var(--border); padding: 40px; overflow: hidden;">
+      <!-- MAP CANVAS CONTAINER -->
+      <div id="map-wrap" style="position:relative; width:100%; background:#0b0e0a; border:1px solid var(--border); overflow:hidden; border-radius:2px;">
+        <canvas id="map-canvas" style="display:block; width:100%;"></canvas>
+        <!-- Label layer — absolutely positioned HTML labels that move with zoom -->
+        <div id="map-labels" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden;"></div>
+      </div>
+
+      <!-- City timezone chips -->
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; margin-bottom: 40px;">
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(200,240,74,0.22); border-radius: 2px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);"><span style="width: 5px; height: 5px; background: #c8f04a; border-radius: 50%; display: inline-block; flex-shrink:0;"></span>Sydney, AU <span style="color: #555; margin-left:4px;">UTC+11</span></div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(200,240,74,0.22); border-radius: 2px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);"><span style="width: 5px; height: 5px; background: #c8f04a; border-radius: 50%; display: inline-block; flex-shrink:0;"></span>Amsterdam, NL <span style="color: #555; margin-left:4px;">UTC+1</span></div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(200,240,74,0.22); border-radius: 2px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);"><span style="width: 5px; height: 5px; background: #c8f04a; border-radius: 50%; display: inline-block; flex-shrink:0;"></span>Warsaw, PL <span style="color: #555; margin-left:4px;">UTC+1</span></div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(200,240,74,0.22); border-radius: 2px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);"><span style="width: 5px; height: 5px; background: #c8f04a; border-radius: 50%; display: inline-block; flex-shrink:0;"></span>New York, US <span style="color: #555; margin-left:4px;">UTC-5</span></div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(200,240,74,0.22); border-radius: 2px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);"><span style="width: 5px; height: 5px; background: #c8f04a; border-radius: 50%; display: inline-block; flex-shrink:0;"></span>Houston, US <span style="color: #555; margin-left:4px;">UTC-6</span></div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(200,240,74,0.22); border-radius: 2px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);"><span style="width: 5px; height: 5px; background: #c8f04a; border-radius: 50%; display: inline-block; flex-shrink:0;"></span>Los Angeles, US <span style="color: #555; margin-left:4px;">UTC-8</span></div>
+      </div>
+
+      <!-- Two-column statement -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid var(--border); padding-top: 36px;">
+        <div>
+          <p style="font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1.25; margin-bottom: 14px;">19-hour timezone spread.<br />Zero dropped balls.</p>
+          <p style="color: var(--muted); font-size: 13px; line-height: 1.8;">From a 9am standup in Sydney to an async update for New York at midnight. I have operated inside that window without missing a beat. Global collaboration is not a new challenge for me. It is simply how I work.</p>
+        </div>
+        <div>
+          <p style="font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1.25; margin-bottom: 14px;">Distributed teams.<br />Worldwide scope. Right at home.</p>
+          <p style="color: var(--muted); font-size: 13px; line-height: 1.8;">Distributed teams, international clients, multi-region operations. That is the environment I perform best in. The timezone gap is not something I manage around. It is something I have already built for.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" style="max-width: 100%; padding-left: 40px; padding-right: 40px;">
+  <div class="contact-inner">
+    <div class="reveal">
+      <p class="section-label">Contact</p>
+      <h2 class="contact-cta">Let's build<br /><em>something that runs</em><br />without you.</h2>
+      <p class="contact-text">
+        If you need an operator who thinks in systems, executes in silence, and ships what others only plan.
+        I am available for executive operations, AI automation builds, and founding team partnerships.
+      </p>
+      <a href="mailto:rashedjaowad1013@gmail.com" class="btn-primary" style="display: inline-flex; margin-bottom: 0;">
+        Send an Email →
+      </a>
+    </div>
+
+    <div class="contact-links reveal reveal-delay-1">
+      <a href="mailto:rashedjaowad1013@gmail.com" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M1 5 L8 9.5 L15 5" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </div>
+        rashedjaowad1013@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/rashedjaowad13" target="_blank" rel="noopener" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="4.5" y1="6.5" x2="4.5" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="4.5" cy="4.5" r="0.8" fill="currentColor"/>
+            <path d="M7.5 6.5 L7.5 12 M7.5 8.5 C7.5 7 12 6.5 12 9 L12 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        linkedin.com/in/rashedjaowad13
+      </a>
+      <div class="contact-link" style="justify-content: space-between;">
+        <span style="color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Available for</span>
+        <span style="color: var(--accent);">Remote · Contract · Full-time</span>
+      </div>
+      <div class="contact-link" style="justify-content: space-between; border-color: rgba(200,240,74,0.25);">
+        <span style="color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Collaboration</span>
+        <span style="color: var(--accent); font-size: 12px;">Ready to work with anyone, anywhere.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Rashed Jaowad</div>
+  <div class="footer-text">Executive Operations & AI Strategy · 2025</div>
+</footer>
+
+<script>
+  // CUSTOM CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .do-card, .project-item, .skill-tag').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px';
+      ring.style.width = '50px'; ring.style.height = '50px'; ring.style.opacity = '0.6';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px'; cursor.style.height = '12px';
+      ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.4';
+    });
+  });
+
+  // SCROLL REVEAL
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // COUNT UP ON HERO STATS (immediate on load)
+  function countUp(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const duration = 1800;
+    const step = Math.ceil(target / (duration / 16));
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 16);
+  }
+  setTimeout(() => {
+    document.querySelectorAll('.hero-stat .num[data-target]').forEach(countUp);
+  }, 1100);
+
+  // COUNT UP ON METRICS (on scroll)
+  const metricObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.counted) {
+        e.target.dataset.counted = '1';
+        countUp(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.count-up[data-target]').forEach(el => metricObserver.observe(el));
+
+
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+(function() {
+  const CITIES = [
+    { name: "New York",    lon: -74.006,  lat: 40.713,  tz: "UTC-5"  },
+    { name: "Houston",     lon: -95.370,  lat: 29.760,  tz: "UTC-6"  },
+    { name: "Los Angeles", lon: -118.244, lat: 34.052,  tz: "UTC-8"  },
+    { name: "Amsterdam",   lon: 4.904,    lat: 52.367,  tz: "UTC+1"  },
+    { name: "Warsaw",      lon: 21.012,   lat: 52.229,  tz: "UTC+1"  },
+    { name: "Sydney",      lon: 151.209,  lat: -33.868, tz: "UTC+11" }
+  ];
+
+  const CONNECTIONS = [
+    [0,3],[0,1],[1,2],[3,4],[3,5],[4,5],[0,5],[2,3]
+  ];
+
+  const wrap    = document.getElementById("map-wrap");
+  const canvas  = document.getElementById("map-canvas");
+  const labelsDiv = document.getElementById("map-labels");
+  const ctx     = canvas.getContext("2d");
+
+  let W, H, dpr;
+  const currentTransform = d3.zoomIdentity;
+  let geoData = null;
+  let animOffset = 0;
+  let rafId;
+
+  // ----- sizing -----
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    W   = wrap.offsetWidth;
+    H   = Math.round(W * 0.52);
+    wrap.style.height = H + "px";
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + "px";
+    canvas.style.height = H + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  // ----- projection -----
+  function getProjection(transform) {
+    const k = transform.k;
+    const tx = transform.x;
+    const ty = transform.y;
+    return d3.geoNaturalEarth1()
+      .scale((W / 6.2) * k)
+      .translate([W / 2 * k + tx, H / 2 * k + ty]);
+  }
+
+  // ----- draw -----
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const proj    = getProjection(currentTransform);
+    const pathGen = d3.geoPath(proj, ctx);
+
+    // Ocean bg
+    ctx.fillStyle = "#0b0e0a";
+    ctx.fillRect(0, 0, W, H);
+
+    // Graticule (grid lines)
+    if (geoData) {
+      const graticule = d3.geoGraticule()();
+      ctx.beginPath();
+      pathGen(graticule);
+      ctx.strokeStyle = "rgba(255,255,255,0.045)";
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+
+      // Land
+      ctx.beginPath();
+      pathGen(geoData.land);
+      ctx.fillStyle   = "rgba(255,255,255,0.09)";
+      ctx.strokeStyle = "rgba(255,255,255,0.22)";
+      ctx.lineWidth   = 0.6;
+      ctx.fill();
+      ctx.stroke();
+
+      // Country borders
+      ctx.beginPath();
+      pathGen(geoData.borders);
+      ctx.strokeStyle = "rgba(255,255,255,0.10)";
+      ctx.lineWidth   = 0.35;
+      ctx.stroke();
+    }
+
+    const k = currentTransform.k;
+
+    // ----- Animated connection lines -----
+    // [0,5] = New York -> Sydney: reverse direction so dashes flow Sydney -> New York
+    CONNECTIONS.forEach(([ai, bi]) => {
+      const a = CITIES[ai];
+      const b = CITIES[bi];
+      const pa = proj([a.lon, a.lat]);
+      const pb = proj([b.lon, b.lat]);
+      if (!pa || !pb) return;
+
+      const dashLen = 10;
+      const gapLen  = 6;
+      const period  = dashLen + gapLen;
+      const offset  = (animOffset * 0.6) % period;
+
+      // NY(0)->Sydney(5): draw line from Sydney back to NY so dashOffset flows SYD->NY
+      const isNYtoSyd = (ai === 0 && bi === 5);
+      const x1 = isNYtoSyd ? pb[0] : pa[0];
+      const y1 = isNYtoSyd ? pb[1] : pa[1];
+      const x2 = isNYtoSyd ? pa[0] : pb[0];
+      const y2 = isNYtoSyd ? pa[1] : pb[1];
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = "rgba(200,240,74,0.30)";
+      ctx.lineWidth   = Math.max(0.8, 1.4 / k);
+      ctx.setLineDash([dashLen, gapLen]);
+      ctx.lineDashOffset = -offset;
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    });
+
+    // ----- City dots -----
+    const dotR  = Math.max(3, 5 / k);
+    const ring1 = Math.max(6, 12 / k);
+    const ring2 = Math.max(10, 20 / k);
+    const pulse = (Math.sin(Date.now() / 600) + 1) / 2; // 0..1
+
+    CITIES.forEach((city, i) => {
+      const p = proj([city.lon, city.lat]);
+      if (!p) return;
+
+      // outer pulse ring
+      ctx.beginPath();
+      ctx.arc(p[0], p[1], ring2 * (0.6 + 0.4 * pulse), 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(200,240,74,${0.10 + 0.10 * pulse})`;
+      ctx.lineWidth   = 0.8 / k;
+      ctx.stroke();
+
+      // inner ring
+      ctx.beginPath();
+      ctx.arc(p[0], p[1], ring1, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(200,240,74,0.35)";
+      ctx.lineWidth   = 1 / k;
+      ctx.stroke();
+
+      // core dot
+      ctx.beginPath();
+      ctx.arc(p[0], p[1], dotR, 0, Math.PI * 2);
+      ctx.fillStyle = "#c8f04a";
+      ctx.fill();
+    });
+
+    // ----- Labels (HTML layer) -----
+    updateLabels(proj, k);
+  }
+
+  // ----- Label collision logic (Google Maps style) -----
+  // At low zoom: show compact pill labels offset from dot
+  // At higher zoom: labels separate, grow, show timezone
+  // Collision: if two labels overlap, hide the lower-priority one until zoom separates them
+
+  function updateLabels(proj, k) {
+    labelsDiv.innerHTML = "";
+
+    const placed = []; // [{x1,y1,x2,y2}] bounding boxes of placed labels
+
+    // Sort by priority (cities further apart get rendered first to win collisions)
+    const ordered = CITIES.slice().sort((a, b) => {
+      // Amsterdam and Warsaw are close — Warsaw defers
+      return a.name === "Warsaw" ? 1 : b.name === "Warsaw" ? -1 : 0;
+    });
+
+    ordered.forEach((city) => {
+      const p = proj([city.lon, city.lat]);
+      if (!p) return;
+      const px = p[0], py = p[1];
+
+      // Out of viewport
+      if (px < -60 || px > W + 60 || py < -40 || py > H + 40) return;
+
+      // Label sizing scales with zoom
+      const fontSize  = Math.min(12, Math.max(9, 9 + (k - 1) * 1.5));
+      const showTz    = k > 2.5;
+      const label     = city.name.toUpperCase();
+      const tzLabel   = showTz ? city.tz : "";
+
+      // Estimate label width (rough: 7px per char at 10px font)
+      const charW     = fontSize * 0.68;
+      const lw        = label.length * charW + (showTz ? tzLabel.length * charW * 0.85 + 8 : 0) + 16;
+      const lh        = showTz ? 32 : 22;
+
+      // Candidate offsets: prefer right, then below, then left, then above
+      const dotR = Math.max(4, 7 / k);
+      const gap  = Math.max(6, 10 / k);
+      const offsets = [
+        { dx: dotR + gap, dy: -lh / 2 },           // right
+        { dx: -lw - dotR - gap, dy: -lh / 2 },     // left
+        { dx: -lw / 2, dy: dotR + gap },            // below
+        { dx: -lw / 2, dy: -lh - dotR - gap }       // above
+      ];
+
+      let chosen = null;
+      for (const off of offsets) {
+        const bx1 = px + off.dx;
+        const by1 = py + off.dy;
+        const bx2 = bx1 + lw;
+        const by2 = by1 + lh;
+
+        // Check viewport bounds
+        if (bx1 < -20 || bx2 > W + 20 || by1 < -20 || by2 > H + 20) continue;
+
+        // Check collision with placed labels
+        let collides = false;
+        for (const b of placed) {
+          if (bx1 < b.x2 + 4 && bx2 > b.x1 - 4 && by1 < b.y2 + 4 && by2 > b.y1 - 4) {
+            collides = true; break;
+          }
+        }
+        if (!collides) { chosen = { bx1, by1, bx2, by2, off }; break; }
+      }
+
+      // If all positions collide and zoom is low, skip label — it will appear as zoom increases
+      if (!chosen) return;
+
+      placed.push({ x1: chosen.bx1, y1: chosen.by1, x2: chosen.bx2, y2: chosen.by2 });
+
+      // Draw connector line from dot to label (only when offset is large enough)
+      const lineLen = Math.sqrt(chosen.off.dx**2 + chosen.off.dy**2);
+      const connEl  = document.createElement("div");
+      connEl.style.cssText = `
+        position:absolute;
+        left:${px}px; top:${py}px;
+        pointer-events:none;
+      `;
+
+      // HTML label pill
+      const el = document.createElement("div");
+      el.style.cssText = `
+        position:absolute;
+        left:${chosen.bx1}px;
+        top:${chosen.by1}px;
+        width:${lw}px;
+        background: rgba(10,12,8,0.82);
+        border: 1px solid rgba(200,240,74,0.45);
+        border-radius: 3px;
+        padding: ${showTz ? "4px 8px" : "3px 7px"};
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: opacity 0.2s;
+        pointer-events: none;
+        box-shadow: 0 0 12px rgba(200,240,74,0.12);
+      `;
+
+      const nameSpan = document.createElement("div");
+      nameSpan.textContent = label;
+      nameSpan.style.cssText = `
+        font-family: 'DM Mono', monospace;
+        font-size: ${fontSize}px;
+        font-weight: 500;
+        color: #c8f04a;
+        letter-spacing: 0.12em;
+        white-space: nowrap;
+        line-height: 1;
+      `;
+      el.appendChild(nameSpan);
+
+      if (showTz) {
+        const tzSpan = document.createElement("div");
+        tzSpan.textContent = city.tz;
+        tzSpan.style.cssText = `
+          font-family: 'DM Mono', monospace;
+          font-size: ${fontSize * 0.82}px;
+          color: rgba(200,240,74,0.5);
+          letter-spacing: 0.08em;
+          white-space: nowrap;
+          line-height: 1;
+          margin-top: 3px;
+        `;
+        el.appendChild(tzSpan);
+      }
+
+      labelsDiv.appendChild(el);
+    });
+  }
+
+  // ----- Animation loop -----
+  function tick() {
+    animOffset++;
+    draw();
+    rafId = requestAnimationFrame(tick);
+  }
+
+  // ----- Load world data -----
+  async function loadMap() {
+    try {
+      const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+      geoData = {
+        land:    topojson.feature(world, world.objects.land),
+        borders: topojson.mesh(world, world.objects.countries, (a, b) => a !== b)
+      };
+    } catch(e) {
+      console.warn("Map data load failed", e);
+    }
+    resize();
+    tick();
+  }
+
+  window.addEventListener("load", function() {
+    resize();
+    loadMap();
+  });
+
+  window.addEventListener("resize", resize);
+
+})();
+</script>
+
+</body>
+</html>
