@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hey Samu, I built you something | Rashed Jaowad Khan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1033; --pink:#ff3d81; --sun:#ffd60a; --blue:#2f5bff; --mint:#19e6a7; --bg:#f4ecff; --white:#fff;
+  --bd:3px solid var(--ink); --shadow:6px 6px 0 var(--ink);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:17px;
+  background-image:radial-gradient(var(--ink) 1.2px,transparent 1.2px);background-size:26px 26px;background-position:0 0;overflow-x:hidden}
+h1,h2,h3{font-family:'Bricolage Grotesque','Arial Black',system-ui,sans-serif;line-height:1.05;letter-spacing:-.02em}
+a{color:inherit}
+:focus-visible{outline:4px solid var(--blue);outline-offset:3px}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+
+/* top strip */
+.strip{background:var(--ink);color:var(--sun);overflow:hidden;white-space:nowrap;border-bottom:var(--bd);font-weight:700;font-size:15px;padding:9px 0}
+.strip span{display:inline-block;padding-left:100%;animation:slide 28s linear infinite}
+@keyframes slide{to{transform:translateX(-100%)}}
+
+/* hero */
+.hero{padding:64px 0 40px}
+.hero h1{font-size:clamp(44px,9vw,92px);font-weight:800}
+.hero h1 .hl{background:var(--sun);padding:0 .18em;border:var(--bd);display:inline-block;transform:rotate(-2deg);box-shadow:var(--shadow);margin:.08em 0}
+.hero h1 .wave{display:inline-block;transform-origin:70% 70%;animation:wave 1.6s ease-in-out 2}
+@keyframes wave{0%,100%{transform:rotate(0)}20%{transform:rotate(16deg)}40%{transform:rotate(-8deg)}60%{transform:rotate(14deg)}80%{transform:rotate(-4deg)}}
+.hero p.sub{font-size:21px;max-width:560px;margin:26px 0 30px}
+.btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-block;text-decoration:none;font-weight:700;border:var(--bd);padding:13px 22px;border-radius:999px;box-shadow:4px 4px 0 var(--ink);background:var(--pink);color:var(--white);transition:transform .12s,box-shadow .12s}
+.btn.alt{background:var(--mint);color:var(--ink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+
+/* note */
+.note{background:var(--pink);color:var(--white);border:var(--bd);box-shadow:var(--shadow);border-radius:22px;padding:32px 34px;transform:rotate(-1deg);max-width:760px}
+.note h2{font-size:34px;margin-bottom:14px}
+.note p{margin-bottom:12px;font-size:18px}
+.note .sig{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;margin:16px 0 0}
+
+h2.title{font-size:clamp(32px,5vw,48px);margin-bottom:10px;font-weight:800}
+p.lead{max-width:620px;margin-bottom:34px}
+
+/* workflow canvas */
+.canvas{background:var(--white);border:var(--bd);box-shadow:var(--shadow);border-radius:22px;padding:30px 22px;overflow-x:auto}
+.flow{display:grid;grid-template-columns:repeat(3,minmax(170px,1fr)) 40px minmax(190px,1.1fr);gap:0 0;align-items:center;min-width:900px}
+.node{border:var(--bd);border-radius:16px;padding:14px 15px;background:var(--sun);box-shadow:4px 4px 0 var(--ink);font-size:15px}
+.node b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:18px;margin-bottom:3px}
+.node small{display:block;opacity:.85;font-size:13.5px;line-height:1.4;margin-top:4px}
+.n-trig{background:var(--mint)} .n-code{background:var(--sun)} .n-slack{background:var(--blue);color:var(--white)} .n-sheet{background:var(--pink);color:var(--white)}
+.flow>.node{position:relative}
+.flow>.node:nth-child(-n+3)::after{content:"";position:absolute;left:100%;top:50%;width:34px;height:3px;background:var(--ink)}
+.flow>.node:nth-child(3)::after{width:40px}
+.arrow{height:3px;background:var(--ink);position:relative;margin:0 6px}
+.arrow:after{content:"";position:absolute;right:-2px;top:-7px;border-left:12px solid var(--ink);border-top:8.5px solid transparent;border-bottom:8.5px solid transparent}
+.split{display:flex;flex-direction:column;gap:10px;grid-column:5}
+.fork{position:relative;height:100%;display:flex;align-items:center}
+.fork i{display:block;width:100%;height:3px;background:var(--ink)}
+.branch{display:grid;grid-template-columns:40px 1fr;gap:0;align-items:center;margin:8px 0}
+.canvas .cap{margin-top:18px;font-size:14.5px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:3px 12px;font-weight:700;font-size:13.5px;background:var(--bg)}
+
+/* sticker row */
+.stickers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:40px}
+.sticker{border:var(--bd);border-radius:20px;padding:22px;box-shadow:var(--shadow);background:var(--white)}
+.sticker:nth-child(1){background:var(--mint);transform:rotate(-1.5deg)}
+.sticker:nth-child(2){background:var(--sun);transform:rotate(1.2deg)}
+.sticker:nth-child(3){background:#ffb3d1;transform:rotate(-.8deg)}
+.sticker h3{font-size:24px;margin-bottom:6px}
+
+/* slack preview */
+.slack{background:var(--white);border:var(--bd);box-shadow:var(--shadow);border-radius:18px;max-width:640px}
+.slack header{background:var(--ink);color:var(--white);padding:10px 16px;border-radius:14px 14px 0 0;font-weight:700;font-size:15px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.slack header em{font-style:normal;color:var(--sun)}
+.slack .body{padding:18px 20px;font-size:15.5px}
+.slack .item{padding:11px 0;border-bottom:2px dashed #cfc3ea}
+.slack .item:last-of-type{border:0}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid var(--ink);margin-right:7px}
+.d1{background:#ff4d4d}.d2{background:#ff9d2e}.d3{background:var(--sun)}
+.draft{font-style:italic;display:block;margin-top:5px;font-size:14.5px;background:var(--bg);padding:8px 10px;border-radius:8px}
+
+/* settings table */
+.rules{background:var(--white);border:var(--bd);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.rules div{display:grid;grid-template-columns:minmax(150px,1fr) 2fr;border-bottom:var(--bd)}
+.rules div:last-child{border:0}
+.rules b,.rules span{padding:12px 16px;font-size:15.5px}
+.rules b{background:var(--sun);border-right:var(--bd)}
+
+/* honest box */
+.honest{background:var(--white);border:var(--bd);border-radius:20px;padding:26px 28px;box-shadow:var(--shadow);max-width:760px}
+.honest ul{margin:12px 0 0 20px}
+.honest li{margin-bottom:8px}
+
+footer{background:var(--ink);color:var(--white);padding:50px 0;border-top:var(--bd);text-align:center}
+footer h2{font-size:clamp(30px,5vw,46px);margin-bottom:12px;color:var(--sun)}
+footer p{margin-bottom:24px}
+footer .btn{background:var(--pink)}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .note{padding:24px 22px}
+  .rules div{grid-template-columns:1fr}
+  .rules b{border-right:0;border-bottom:var(--bd)}
+}
+@media (prefers-reduced-motion:reduce){
+  .strip span{animation:none;padding-left:20px}
+  .hero h1 .wave{animation:none}
+  html{scroll-behavior:auto}
+  .btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="strip" aria-hidden="true"><span>Made for Samu at KS Media &nbsp;★&nbsp; Built from your own hiring video &nbsp;★&nbsp; Fake data only &nbsp;★&nbsp; Nothing here ever emails a client &nbsp;★&nbsp; Made for Samu at KS Media &nbsp;★&nbsp; Built from your own hiring video &nbsp;★&nbsp;</span></div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Hey Samu <span class="wave" aria-hidden="true">👋</span><br>I built you <span class="hl">something.</span></h1>
+    <p class="sub">I am Rashed, applying for your Operations Manager role. Instead of only telling you how I think about ops, I built a small workflow for one problem from your video: keeping every video on deadline.</p>
+    <div class="btns">
+      <a class="btn" href="#how">See how it works</a>
+      <a class="btn alt" href="n8n_daily_video_deadline_check.json" download>Download the workflow (JSON)</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="note">
+      <h2>A quick note</h2>
+      <p>I watched your hiring video and kept coming back to one part: the ops manager keeps everything moving across 40+ clients and a big team of editors, and nothing is allowed to slip.</p>
+      <p>So I took a first swing at that problem. It is a prototype, it is rough, and it is built only from what you described. I would genuinely love to hear what you would change.</p>
+      <p class="sig">Rashed</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="title">The Daily Video Deadline Check</h2>
+    <p class="lead">Every weekday morning it reads the video tracker, spots videos that are overdue, due soon or stuck in a stage, asks the editor for a status, and sends you one summary with draft client updates to review.</p>
+
+    <div class="canvas" role="img" aria-label="Workflow diagram: weekday 9:00 trigger, read video tracker, flag at-risk videos, then two branches: ask the editor for status on Slack, and send a digest to the ops channel.">
+      <div class="flow" aria-hidden="true">
+        <div class="node n-trig"><b>Weekdays 9:00</b>Schedule trigger<small>Cron: 0 9 * * 1-5</small></div>
+        <div class="node n-sheet" style="margin-left:34px"><b>Read tracker</b>Google Sheets<small>Tab "Videos", one row per video</small></div>
+        <div class="node n-code" style="margin-left:34px"><b>Flag at-risk videos</b>Code<small>Overdue, due soon, or stuck. Writes the editor message and client draft.</small></div>
+        <div></div>
+        <div class="split">
+          <div class="node n-slack"><b>Ask editor for status</b>Slack DM<small>Only if the editor has a Slack ID</small></div>
+          <div class="node n-slack"><b>Send digest to ops</b>Slack channel<small>One message, drafts included</small></div>
+        </div>
+      </div>
+      <div class="cap">
+        <span class="tag">9 nodes incl. 2 sticky notes</span>
+        <span class="tag">Inactive until you connect credentials</span>
+        <span class="tag">Never contacts clients</span>
+      </div>
+    </div>
+
+    <div class="stickers">
+      <div class="sticker"><h3>You stay in the loop</h3><p>Client updates are drafts for a human to review. Your rule, "talk to me before telling clients about problems," is built in.</p></div>
+      <div class="sticker"><h3>Editors get a nudge</h3><p>A short, friendly message asks for a status and an ETA, and invites them to say what they are blocked on.</p></div>
+      <div class="sticker"><h3>One summary, not noise</h3><p>All flagged videos land in a single message, sorted by how urgent they are.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="title">What lands in Slack</h2>
+    <p class="lead">An example of the daily summary. Every name and video below is made up.</p>
+    <div class="slack">
+      <header><span>#ops-daily</span><em>made-up data</em></header>
+      <div class="body">
+        <p><b>Daily video risk check:</b> 3 videos need attention</p>
+        <div class="item"><span class="dot d1"></span><b>OVERDUE:</b> "Why Cold Email Still Works" (Acme SaaS)<br>Editor: Sam | Stage: Editing | 2 days past due
+          <span class="draft">Draft client update (review before sending): Hi Acme, a quick update on "Why Cold Email Still Works": it is running behind our original date. I am confirming a new ETA with the editor and will send it to you today.</span></div>
+        <div class="item"><span class="dot d2"></span><b>DUE SOON:</b> "3 Onboarding Mistakes" (Northwind)<br>Editor: Priya | Stage: Revisions | due in 1 day</div>
+        <div class="item"><span class="dot d3"></span><b>STUCK:</b> "Pricing Page Teardown" (Bluebird)<br>Editor: Leo | Stage: Client Review | 4 days in Client Review</div>
+        <p style="font-size:14px;margin-top:8px">Editors with a Slack ID were pinged for status. No client has been contacted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="title">The rules (easy to change)</h2>
+    <p class="lead">These are my starting guesses, not your real rules. They sit at the top of one node so the team can set them to match how work actually moves.</p>
+    <div class="rules">
+      <div><b>Due soon</b><span>Within 2 days of the due date</span></div>
+      <div><b>Stuck limits</b><span>Scripting 4 days, Editing 3, Revisions 2, Client Review 3</span></div>
+      <div><b>Skipped</b><span>Videos marked Scheduled or Published</span></div>
+      <div><b>Tracker columns</b><span>Video ID, Client, Video Title, Editor, Editor Slack ID, Stage, Due Date, Stage Entered</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="honest">
+      <h2 class="title" style="font-size:34px">Straight talk</h2>
+      <ul>
+        <li>This is a <b>prototype</b> with no real data. I would want to learn how your team actually works before changing anything.</li>
+        <li>It reads a Google Sheet because I have not used your Airtable base. The same logic maps to Airtable, and that is the first thing I would swap.</li>
+        <li>I have done this kind of work before: at Prioticket, my n8n workflows and AI agents freed up 100+ hours a week for the team.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h2>Shall we talk?</h2>
+    <p>I would love to hear what you would change, and how I can help keep KS Media running smoothly.</p>
+    <div class="btns" style="justify-content:center">
+      <a class="btn" href="mailto:rashedjaowad1013@gmail.com">Email me</a>
+      <a class="btn alt" href="https://linkedin.com/in/rashedjaowad13">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
